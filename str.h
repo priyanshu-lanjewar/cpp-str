@@ -428,12 +428,13 @@ str::operator double() {
 }
 
 std::ostream &operator<<(std::ostream &ou, str const&s) {
-    ou << s.s<<std::endl;
+    ou << s.s;
     return ou;
 }
 
 std::istream &operator>>(std::istream &in, str &x) {
-    in >> *(x.s);
+    x = new char[::len(x)];
+    in >>(x.s);
     return in;
 }
 
