@@ -133,8 +133,8 @@ template<class T> void str::tostr(T val) {
         }
         *((this->s) + (l + 1)) = '\0';
         for (; k != 0; l--) {
-            char c = (char) (((T)k % 10) + '0');
-            *((this->s) + l) = c;
+            char o = (char) (((T)k % 10) + '0');
+            *((this->s) + l) = o;
             k /= 10;
         }
     }
