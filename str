@@ -10,30 +10,35 @@
 #ifndef _GLIBCXX_CSTDARG
 #include "cstdarg"
 #endif
+#ifndef _TYPEINFO
+#include "typeinfo"
+#endif
 
 class str {
 private:
     char* s;
+    template<class T> void tostr(T val);
 public:
 
     //Constructors - Below
-    str(char* s);
-    explicit str(bool s);
-    explicit str(char s);
-    explicit str(unsigned char s);
-    explicit str(short s);
-    explicit str(unsigned  short s);
-    explicit str(int s);
-    explicit str(unsigned int s);
-    explicit str(long s);
-    explicit str(unsigned long s);
-    explicit str(long long s);
-    explicit str(unsigned long long s);
-    explicit str(float s);
-    explicit str(double s);
+    str(char* string_value);
+    explicit str(bool bool_value);
+    explicit str(char char_value);
+    explicit str(unsigned char unsigned_char_value);
+    explicit str(short short_value);
+    explicit str(unsigned  short unsigned_short_value);
+    explicit str(int int_value);
+    explicit str(unsigned int unsigned_int_value);
+    explicit str(long long_value);
+    explicit str(unsigned long unsigned_long_value);
+    explicit str(long long long_long_value);
+    explicit str(unsigned long long unsigned_long_long_val);
+    explicit str(float float_value);
+    explicit str(double double_value);
     //Constructors - Above
 
     //Type Casting - Below
+
     operator char* ();
     explicit operator bool ();
     explicit operator char ();
@@ -71,6 +76,7 @@ public:
     //friend functions - Below
 
     friend int len(str s);
+    friend int len(char* s);
     friend str rev(str s);
     friend void rev(str* s);
     friend int countChar(str s,char c);
@@ -89,206 +95,156 @@ public:
 
 // Definition Begins Here
 
+int len(char* s) {
+    int c=0;
+    for(;*(s+c)!='\0';c++);
+    return c;
+}
+
 // Constructor Begins
 
-str::str(char *s):s{s} {
-    this->s = new char [10];
-    this->s=s;
+template<class T> void str::tostr(T val) {
+    char c = (typeid(val).name())[0];
+    if(c=='b'){
+        (this->s) = new char[(val?5:6)];
+        (this->s) = (char*)((bool)val ? "true" : "false");
+    } else if(c=='c'){
+        this->s = new char[2];
+        *(this->s) = val;
+        *(this->s+1)='\0';
+    }else if(c=='h'){
+        this->s = new char[2];
+        *(this->s) = (char)val;
+        *(this->s+1)='\0';
+    }
+    else {
+        T k = val;
+        int l = 0;
+        for (int i = 0; k != 0; i++, l++, k /= 10);
+        l--;
+        k = val;
+        if (val < 0) {
+            k = k * -1;
+            l++;
+            (this->s) = new char[l];
+            *((this->s)) = '-';
+        } else {
+            (this->s) = new char[l];
+        }
+        *((this->s) + (l + 1)) = '\0';
+        for (; k != 0; l--) {
+            char c = (char) (((T)k % 10) + '0');
+            *((this->s) + l) = c;
+            k /= 10;
+        }
+    }
 }
 
-str::str(bool s) {
-    this->s= (char*)(s? "true" : "false");
+str::str(char *string_value):s{string_value} {
+    this->s = new char [::len(string_value)];
+    int i=0;
+    for(;*(string_value+i)!='\0';i++){
+        *(this->s+i)=*(string_value+i);
+    }
+    *(this->s+i)='\0';
 }
 
-str::str(char s) {
-    delete this->s;
-    this->s = new char[1];
-    *(this->s) = s;
-    *(this->s+1)='\0';
+str::str(bool bool_value) {
+    tostr(bool_value);
 }
 
-str::str(unsigned char s) {
-    delete this->s;
-    this->s = new char[1];
-    *(this->s) = s;
-    *(this->s+1)='\0';
+str::str(char char_value) {
+    tostr(char_value);
 }
 
-str::str(short s) {
-    short k = s,l=0;
-    for(int i=0;k!=0;i++,l++,k/=10);
-    l--;
-    k=s;
-    if(s<0){
-        k=k*-1;
+str::str(unsigned char unsigned_char_value) {
+    tostr(unsigned_char_value);
+}
+
+str::str(short short_value) {
+    tostr(short_value);
+}
+
+str::str(unsigned short unsigned_short_value) {
+    tostr(unsigned_short_value);
+}
+
+str::str(int int_value) {
+    tostr(int_value);
+}
+
+str::str(unsigned int unsigned_int_value) {
+    tostr(unsigned_int_value);
+}
+
+str::str(long long_value) {
+    tostr(long_value);
+}
+
+str::str(unsigned long unsigned_long_value){
+    tostr(unsigned_long_value);
+}
+
+str::str(long long long_long_value) {
+    tostr(long_long_value);
+}
+
+str::str(unsigned long long unsigned_long_long_value) {
+    tostr(unsigned_long_long_value);
+}
+
+str::str(float float_value){
+    float k = float_value;
+    int l = 0, ptAt;
+    for (int i = 0; k >=1; i++, l++, k /= 10);
+    k=float_value;
+    ptAt=l;
+    for (int i = 0; ((long )k)%10!=0; i++, l++, k *= 10);
+    if (float_value< 0) {
+        k = k * -1;
         l++;
-        (this->s)=new char[l];
-        *((this->s)) ='-';
-    }else{
-        (this->s)=new char[l];
+        (this->s) = new char[l];
+        *((this->s)) = '-';
+    } else {
+        (this->s) = new char[l];
     }
-    *((this->s)+(l+1))='\0';
-    for(;k!=0;l--){
-        char c = (char)((k%10)+'0');
-        *((this->s)+l) = c;
-        k/=10;
+    *((this->s) + (l + 1)) = '\0';
+    for (; k != 0; l--) {
+        char c = (char) (((long)k % 10) + '0');
+        if(ptAt==l) {
+            *((this->s) + l) ='.';
+            l--;
+        }
+        *((this->s) + l) = c;
+        k /= 10;
     }
 }
 
-str::str(unsigned short s) {
-    unsigned short k = s,l=0;
-    for(int i=0;k!=0;i++,l++,k/=10);
-    l--;
-    k=s;
-    if(s<0){
-        k=k*-1;
+str::str(double double_value) {
+    double k = double_value;
+    int l = 0, ptAt;
+    for (int i = 0; k >=1; i++, l++, k /= 10);
+    k=double_value;
+    ptAt=l;
+    for (int i = 0; ((long long )k)%10!=0; i++, l++, k *= 10);
+    if (double_value< 0) {
+        k = k * -1;
         l++;
-        (this->s)=new char[l];
-        *((this->s)) ='-';
-    }else{
-        (this->s)=new char[l];
+        (this->s) = new char[l];
+        *((this->s)) = '-';
+    } else {
+        (this->s) = new char[l];
     }
-    *((this->s)+(l+1))='\0';
-    for(;k!=0;l--){
-        char c = (char)((k%10)+'0');
-        *((this->s)+l) = c;
-        k/=10;
+    *((this->s) + (l + 1)) = '\0';
+    for (; k != 0; l--) {
+        char c = (char) (((long long )k % 10) + '0');
+        if(ptAt==l) {
+            *((this->s) + l) ='.';
+            l--;
+        }
+        *((this->s) + l) = c;
+        k /= 10;
     }
-}
-
-str::str(int s) {
-    int k = s,l=0;
-    for(int i=0;k!=0;i++,l++,k/=10);
-    l--;
-    k=s;
-    if(s<0){
-        k=k*-1;
-        l++;
-        (this->s)=new char[l];
-        *((this->s)) ='-';
-    }else{
-        (this->s)=new char[l];
-    }
-    *((this->s)+(l+1))='\0';
-    for(;k!=0;l--){
-        char c = (char)((k%10)+'0');
-        *((this->s)+l) = c;
-        k/=10;
-    }
-
-}
-
-str::str(unsigned int s) {
-    unsigned int k = s,l=0;
-    for(int i=0;k!=0;i++,l++,k/=10);
-    l--;
-    k=s;
-    if(s<0){
-        k=k*-1;
-        l++;
-        (this->s)=new char[l];
-        *((this->s)) ='-';
-    }else{
-        (this->s)=new char[l];
-    }
-    *((this->s)+(l+1))='\0';
-    for(;k!=0;l--){
-        char c = (char)((k%10)+'0');
-        *((this->s)+l) = c;
-        k/=10;
-    }
-}
-
-str::str(long s) {
-    long k = s,l=0;
-    for(int i=0;k!=0;i++,l++,k/=10);
-    l--;
-    k=s;
-    if(s<0){
-        k=k*-1;
-        l++;
-        (this->s)=new char[l];
-        *((this->s)) ='-';
-    }else{
-        (this->s)=new char[l];
-    }
-    *((this->s)+(l+1))='\0';
-    for(;k!=0;l--){
-        char c = (char)((k%10)+'0');
-        *((this->s)+l) = c;
-        k/=10;
-    }
-}
-
-str::str(unsigned long s) { // NOLINT(cppcoreguidelines-pro-type-member-init)
-    unsigned long k = s,l=0;
-    for(int i=0;k!=0;i++,l++,k/=10);
-    l--;
-    k=s;
-    if(s<0){
-        k=k*-1;
-        l++;
-        (this->s)=new char[l];
-        *((this->s)) ='-';
-    }else{
-        (this->s)=new char[l];
-    }
-    *((this->s)+(l+1))='\0';
-    for(;k!=0;l--){
-        char c = (char)((k%10)+'0');
-        *((this->s)+l) = c;
-        k/=10;
-    }
-}
-
-str::str(long long s) {
-    long long k = s,l=0;
-    for(int i=0;k!=0;i++,l++,k/=10);
-    l--;
-    k=s;
-    if(s<0){
-        k=k*-1;
-        l++;
-        (this->s)=new char[l];
-        *((this->s)) ='-';
-    }else{
-        (this->s)=new char[l];
-    }
-    *((this->s)+(l+1))='\0';
-    for(;k!=0;l--){
-        char c = (char)((k%10)+'0');
-        *((this->s)+l) = c;
-        k/=10;
-    }
-}
-
-str::str(unsigned long long s) {
-    unsigned long long k = s,l=0;
-    for(int i=0;k!=0;i++,l++,k/=10);
-    l--;
-    k=s;
-    if(s<0){
-        k=k*-1;
-        l++;
-        (this->s)=new char[l];
-        *((this->s)) ='-';
-    }else{
-        (this->s)=new char[l];
-    }
-    *((this->s)+(l+1))='\0';
-    for(;k!=0;l--){
-        char c = (char)((k%10)+'0');
-        *((this->s)+l) = c;
-        k/=10;
-    }
-}
-
-str::str(float s) {
-
-}
-
-str::str(double s) {
-
 }
 
 // Constructor Ends
@@ -430,6 +386,7 @@ str::operator bool() {
 }
 
 str::operator char(){
+
     if(::len(s)!=1){
         throw std::invalid_argument("Cannot Cast String Literal to Char Type");
     }
@@ -713,7 +670,7 @@ int str::lastIndexOf(char c) {
 
 char str::operator[](int x) {
     if(x<-1*::len(s) || x>::len(s)-1){
-        //throw std::out_of_range("Index our of Range\n");
+        throw std::out_of_range("Index our of Range\n");
     }
     if(x>=0){
         return *(s+x);
