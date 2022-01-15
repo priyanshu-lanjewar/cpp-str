@@ -206,54 +206,68 @@ str::str(unsigned long long unsigned_long_long_value) {
 str::str(float float_value){
     float k = float_value;
     int l = 0, ptAt;
+    k = k<0 ? k*-1: k;
     for (int i = 0; k >=1; i++, l++, k /= 10);
     k=float_value;
     ptAt=l;
-    for (int i = 0; ((long )k)%10!=0; i++, l++, k *= 10);
+    for (int i = 0; (k!=((long long)k)); i++, l++, k *= 10);
     if (float_value< 0) {
         k = k * -1;
+        ptAt++;
         l++;
         (this->s) = new char[l];
         *((this->s)) = '-';
     } else {
         (this->s) = new char[l];
     }
-    *((this->s) + (l + 1)) = '\0';
-    for (; k != 0; l--) {
-        char c = (char) (((long)k % 10) + '0');
+    *((this->s) + (l+1)) = '\0';
+
+    for (; (int)k !=0; l--) {
+        char c = (char) (((long long )k % 10L) + '0');
         if(ptAt==l) {
             *((this->s) + l) ='.';
             l--;
         }
         *((this->s) + l) = c;
         k /= 10;
+    }
+    if(this->len()-1==ptAt) {
+        *(this->s+ this->len()) = '0';
+        *(this->s+ this->len()+1) = '\0';
     }
 }
 
 str::str(double double_value) {
     double k = double_value;
     int l = 0, ptAt;
+    k = k<0 ? k*-1: k;
     for (int i = 0; k >=1; i++, l++, k /= 10);
     k=double_value;
     ptAt=l;
-    for (int i = 0; ((long long )k)%10!=0; i++, l++, k *= 10);
+    for (int i = 0; (k!=((long long)k)); i++, l++, k *= 10);
     if (double_value< 0) {
         k = k * -1;
+        ptAt++;
         l++;
         (this->s) = new char[l];
         *((this->s)) = '-';
     } else {
         (this->s) = new char[l];
     }
-    *((this->s) + (l + 1)) = '\0';
-    for (; k != 0; l--) {
-        char c = (char) (((long long )k % 10) + '0');
+    *((this->s) + (l+1)) = '\0';
+
+    for (; (int)k !=0; l--) {
+        char c = (char) (((long long )k % 10L) + '0');
         if(ptAt==l) {
             *((this->s) + l) ='.';
             l--;
         }
         *((this->s) + l) = c;
         k /= 10;
+    }
+    if(this->len()-1==ptAt) {
+        *(this->s+ this->len()) = '0';
+        *(this->s+ this->len()+1) = '\0';
     }
 }
 
