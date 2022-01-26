@@ -15,60 +15,234 @@
 class str {
 private:
 
+    // Char array pointer
     char* s;
+
+    // Function to convert any datatype to str type (internal use only)
     template<class T> void tostr(T val);
 public:
 
     //Constructors - Below
+
+    // Default Constructor
     str();
+
+    /// @name constructor
+    /// @prototype str(const char* string_value)
+    /// @description Constructor to initialise str with char[]
+    /// @parameter const char* : string_value
     str(const char* string_value);
+
+    /// @name constructor
+    /// @prototype str(bool bool_value)
+    /// @description Constructor to initialise str with bool value
+    /// @parameter bool : bool_value
     explicit str(bool bool_value);
+
+    /// @name constructor
+    /// @prototype str(char char_value)
+    /// @description Constructor to initialise str with char value
+    /// @parameter char : char_value
     explicit str(char char_value);
+
+    /// @name constructor
+    /// @prototype str(unsigned char unsigned_char_value)
+    /// @description Constructor to initialise str with unsigned char value
+    /// @parameter unsigned char : unsigned_char_value
     explicit str(unsigned char unsigned_char_value);
+
+    /// @name constructor
+    /// @prototype str(short short_value)
+    /// @description Constructor to initialise str with short value
+    /// @parameter short : short_value
     explicit str(short short_value);
+
+    /// @name constructor
+    /// @prototype str(unsigned short unsigned_short_value)
+    /// @description Constructor to initialise str with unsigned short value
+    /// @parameter unsigned short : unsigned_short_value
     explicit str(unsigned  short unsigned_short_value);
+
+    /// @name constructor
+    /// @prototype str(int int_value)
+    /// @description Constructor to initialise str with int value
+    /// @parameter int : int_value
     explicit str(int int_value);
+
+    /// @name constructor
+    /// @prototype str(unsigned int unsigned_int_value)
+    /// @description Constructor to initialise str with unsigned int value
+    /// @parameter unsigned int : unsigned_int_value
     explicit str(unsigned int unsigned_int_value);
+
+    /// @name constructor
+    /// @prototype str(long long_value)
+    /// @description Constructor to initialise str with long value
+    /// @parameter long : long_value
     explicit str(long long_value);
+
+    /// @name constructor
+    /// @prototype str(unsigned long unsigned_long_value)
+    /// @description Constructor to initialise str with unsigned long value
+    /// @parameter unsigned long : unsigned_long_value
     explicit str(unsigned long unsigned_long_value);
+
+    /// @name constructor
+    /// @prototype str(long long long_long_value)
+    /// @description Constructor to initialise str with long long value
+    /// @parameter long long : long_long_value
     explicit str(long long long_long_value);
+
+    /// @name constructor
+    /// @prototype str(unsigned long long unsigned_long_long_value)
+    /// @description Constructor to initialise str with unsigned long long value
+    /// @parameter unsigned long long : unsigned_long_long_value
     explicit str(unsigned long long unsigned_long_long_val);
+
+    /// @name constructor
+    /// @prototype str(float float_value)
+    /// @description Constructor to initialise str with float value
+    /// @parameter float : float_value
     explicit str(float float_value);
+
+    /// @name constructor
+    /// @prototype str(double double_value)
+    /// @description Constructor to initialise str with double value
+    /// @parameter double : double_value
     explicit str(double double_value);
+
     //Constructors - Above
 
     //Type Casting - Below
 
+    /// @description Implementation to typecast from str type to char* type
     operator char* ();
+
+    /// @description  Implementation to typecast from str type to bool type
     explicit operator bool ();
+
+    /// @description  Implementation to typecast from str type to char type
     explicit operator char ();
+
+    /// @description  Implementation to typecast from str type to unsigned char type
     explicit operator unsigned char ();
+
+    /// @description  Implementation to typecast from str type to short int type
     explicit operator short ();
+
+    /// @description  Implementation to typecast from str type to unsigned short int type
     explicit operator unsigned short ();
+
+    /// @description  Implementation to typecast from str type to int type
     explicit operator int ();
+
+    /// @description  Implementation to typecast from str type to unsigned int type
     explicit operator unsigned int ();
+
+    /// @description  Implementation to typecast from str type to long type
     explicit operator long ();
+
+    /// @description  Implementation to typecast from str type to unsigned long type
     explicit operator unsigned long ();
+
+    /// @description  Implementation to typecast from str type to long long type
     explicit operator long long ();
+
+    /// @description  Implementation to typecast from str type to unsigned long long type
     explicit operator unsigned long long ();
+
+    /// @description  Implementation to typecast from str type to float type
     explicit operator float ();
+
+    /// @description  Implementation to typecast from str type to double type
     explicit operator double ();
 
     //Type Casting - Above
 
     // Str Operations - Below
 
-    int len(); // returns string length
-    str rev(bool internal); // reverse string
-    str operator +(str x); // concatenate  2 string and gives result in another string
-    void operator +=(str x); // concatenate string on right side to left side
-    void operator <<=(str x); // copys the content of right side to left side
+     /// @name len
+     /// @prototype int len(void);
+     /// @description function to compute length of str
+     /// @parameter none
+     /// @return int : length of str
+    int len();
+
+    /// @name rev
+    /// @prototype str rev(bool internal)
+    /// @description reverse the string, if internal = true then it will update str value with its reverse otherwise it will not modify original str
+    /// @parameter bool : internal ; true if want to modify original string otherwise false
+    /// @return str : reversed str
+    str rev(bool internal);
+
+    /// @name (+) concatenation operator
+    /// @prototype str + str
+    /// @description concatenate two str
+    /// @parameter str, str : two str
+    /// @return str : concatenated string
+    str operator +(str x);
+
+    /// @name (+=) concatenate and update operator
+    /// @prototype str += str
+    /// @description append str to right to the end of str to the left of operator
+    /// @parameter str, str : two str
+    /// @return none
+    void operator +=(str x);
+
+    /// @name (<<=) copy operator
+    /// @prototype str <<= str
+    /// @description copies str to right to str to left of operator
+    /// @parameter str, str : two str
+    /// @return none
+    void operator <<=(str x);
+
+    /// @name comparision operator
+    /// @prototype str == str
+    /// @description compares the str on left side to str on right side of operator
+    /// @parameter str, str : two string
+    /// @return bool : equal(true) or not equal(false)
     bool operator ==(str x);
+
+    /// @name (==) comparision operator
+    /// @prototype str == char*
+    /// @description compares str on left side is equal to char* von right side of operator
+    /// @parameter str, char* : str and char array pointer
+    /// @return bool : equal(true) or not equal(false)
     bool operator ==(char* x);
-    str operator ()(int start,int end, int jump); // string slicing
+
+    /// @name str slicing operator
+    /// @prototype str(int start, int end, int jump)
+    /// @description slice the str from start to end(excluding) with jump size that is required
+    /// @parameter int, int, int : start index, end index, jump size(optional)
+    /// @return str : sliced string
+    str operator ()(int start,int end, int jump);
+
+    /// @name charAt operator
+    /// @prototype str[int index]
+    /// @description returns the character present at inputted index. Supports non negative strictly ascending indexing from left i.e. 0,1,2... and supports negative strictly decreasing index from right side i.e. -1, -2, -3...
+    /// @parameter int : index
+    /// @return char : character
     char operator [](int x);
+
+    /// @name count char
+    /// @prototype int countChar(char c)
+    /// @description counts the number of inputted char in str
+    /// @parameter char : character to count
+    /// @return int : number of occurrence of character
     int countChar(char c); // count occurrence of c in string
+
+    /// @name firstIndexOf
+    /// @prototype int firstIndexOf(char c)
+    /// @description finds the first occurrence of inputted character
+    /// @parameter char : character to find
+    /// @return int :first index of character if found otherwise -1
     int firstIndexOf(char c); // returns 1st index of char c in string, if not present returns -1
+
+    /// @name lastIndexOf
+    /// @prototype int lastIndexOf(char c)
+    /// @description finds the last occurrence of inputted character
+    /// @parameter char : character to find
+    /// @return int :last index of character if found otherwise -1
     int lastIndexOf(char c); // returns last index of char c in string, if not present returns -1
 
     // Str Operations - Above
