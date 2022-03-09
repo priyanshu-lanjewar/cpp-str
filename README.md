@@ -1,4 +1,19 @@
 
+# cpp-str (C++ String Manupulation Header)
+
+String is one of the most important datatype in any programing language. Manupulation of String is one of the challangine task in C++. str header contains a str class for c++ string creation and manupulation with advanced features similar to Python.
+
+
+## Installation
+
+Download str header with github by command or [click here](https://github.com/priyanshu-lanjewar/cpp-str/archive/refs/heads/main.zip).
+
+```bash
+    gh repo clone priyanshu-lanjewar/cpp-str
+```
+- Copy ```str``` file into your project folder and you are done.
+
+
 ---
 ## How To Use The Header in  Project
 
